@@ -20,7 +20,7 @@ def index(request):
     user_following_list = []
     feed = []
 
-    user_following = FollowersCount.objects.filter(followers=request.user.username)
+    user_following = FollowersCount.objects.filter(follower=request.user.username)
 
     for users in user_following:
         user_following_list.append(users.user)
