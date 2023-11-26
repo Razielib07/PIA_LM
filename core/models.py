@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import uuid #unique id
+from datetime import datetime
 
 User=get_user_model()
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) #we provide object of the user since we use foreign key
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
     profileimg = models.ImageField(upload_to= 'profile_images', default='blank_profile_picture.png')
@@ -14,3 +16,13 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
     
+class Post(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4) #this id is now of this post, always true
+    user = models.CharField(max_length=100)
+    image =models.ImageField(upload_to='post_images')
+    caption =models.TextField()
+    created_at = models.DateTimeField(default=datetime.now)
+    no_of_likes = models.IntegerField(default=0) #begins with 0 likes
+
+    def __str__(self):
+        return self.user

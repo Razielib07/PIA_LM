@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages #let us show error messages, will be use for when the password doesnt match
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import Profile, Post
 
 #Added this line to make the project work
 #not part of the tutorial
@@ -13,7 +13,24 @@ from . import urls
 
 @login_required(login_url='signin')#makes us login before if we want to see the page content
 def index(request):
-    return render(request, 'index.html')
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user_object)
+    return render(request, 'index.html', {'user_profile': user_profile}) #sends user_profile into html
+
+@login_required(login_url='signin')
+def upload(request):
+
+    if request.method == 'POST':
+        user = request.user.username
+        image = request.FILES.get('image_upload')
+        caption = request.POST['caption']
+
+        new_post = Post.objects.create(user=user, image=image, caption=caption)
+        new_post.save()
+
+        return redirect('/')
+    else: 
+        return redirect('/')
 
 @login_required(login_url='signin')
 def settings(request):
