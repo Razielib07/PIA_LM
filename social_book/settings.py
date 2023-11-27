@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'social_book.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bkscg4vhcesu28p9imxr',
+        'USER': 'uzbvwkdhgzvqo2rl',
+        'PASSWORD': 'AaYN9fOanBByszqV7s3d',
+        'HOST': 'bkscg4vhcesu28p9imxr-mysql.services.clever-cloud.com',
+        'PORT': '3306',
     }
 }
 
